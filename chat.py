@@ -8,7 +8,7 @@ app = Sanic(__name__)
 sockets = []
 
 
-@app.websocket("/chat")
+@app.websocket("/")
 async def chat(request, ws):
     sockets.append(ws)
 
