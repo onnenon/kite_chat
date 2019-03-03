@@ -1,3 +1,4 @@
+import json
 from sanic import Sanic, response
 from sanic.log import logger
 from sanic.websocket import WebSocketProtocol
@@ -6,6 +7,15 @@ from websockets import ConnectionClosed
 app = Sanic(__name__)
 
 sockets = []
+
+
+class Message:
+    def __init__(self, uname, message):
+        self.message = message
+        self.username = uname
+
+    def to_json(self):
+        return {"username": self.username, "text": self.message}
 
 
 @app.websocket("/")
@@ -19,6 +29,11 @@ async def chat(request, ws):
             try:
                 if socket != ws:
                     await socket.send(message)
+                else:
+                    ret_mess = Message(
+                        "**Kite Server**", f"message received: {message}"
+                    ).to_json()
+                    await socket.send(json.dumps(ret_mess))
             except ConnectionClosed:
                 sockets.remove(socket)
 
