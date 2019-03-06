@@ -20,6 +20,12 @@ class Message:
 
 @app.websocket("/")
 async def chat(request, ws):
+    """Begins a "chat" websocket with a client.
+
+    Args:
+        request: The incomming http request.
+        ws: The websocket connection with the client.
+    """
     sockets.append(ws)
 
     while not ws.closed:
