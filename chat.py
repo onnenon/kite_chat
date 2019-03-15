@@ -1,4 +1,5 @@
 import json
+
 from sanic import Sanic, response
 from sanic.log import logger
 from sanic.websocket import WebSocketProtocol
