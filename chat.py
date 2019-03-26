@@ -1,9 +1,12 @@
-import json
+import json, os
 
 from sanic import Sanic, response
 from sanic.log import logger
 from sanic.websocket import WebSocketProtocol
 from websockets import ConnectionClosed
+
+
+MESSAGE_CONFIRMATION = os.getenv("MESSAGE_CONFIRMATION", False)
 
 app = Sanic(__name__)
 
@@ -36,7 +39,7 @@ async def chat(request, ws):
             try:
                 if socket != ws:
                     await socket.send(message)
-                else:
+                elif MESSAGE_CONFIRMATION:
                     ret_mess = Message(
                         "**Kite Server**", f"message received: {message}"
                     ).to_json()
