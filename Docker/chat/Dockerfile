@@ -3,7 +3,7 @@ LABEL author="Stephen Onnen"
 
 WORKDIR /opt
 
-ADD Chat/ /opt
+ADD . /opt
 
 RUN \
     apk add --no-cache --virtual .build-deps libffi-dev gcc musl-dev make && \
